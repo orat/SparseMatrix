@@ -5,6 +5,7 @@ package de.orat.math.sparsematrix;
  */
 public interface iStringMatrix {
     
-     public String[][] copyMatrix();
+     public String[][] toArr();
      public String toString();
+     public iStringMatrix transpose();
 }

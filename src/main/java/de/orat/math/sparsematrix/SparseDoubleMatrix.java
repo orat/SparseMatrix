@@ -7,23 +7,19 @@ package de.orat.math.sparsematrix;
  * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
-public class SparseDoubleMatrix {
+public class SparseDoubleMatrix implements iDoubleMatrix {
     
-    private final Sparsity sparsity;
+    private final MatrixSparsity sparsity;
     private double[] data;
     
     public SparseDoubleMatrix(double[][] m){
         System.out.println(toString(m));
-        sparsity = new Sparsity(m);
+        sparsity = new MatrixSparsity(m);
         System.out.println(sparsity.toString());
         data = rollout(sparsity, m);
     }
-    public SparseDoubleMatrix(Sparsity sparsity, double[][] m){
+    public SparseDoubleMatrix(MatrixSparsity sparsity, double[][] m){
         this.sparsity = sparsity;
-        
-        //testweise
-        System.out.println(sparsity.toString());
-        
         data = rollout(sparsity, m);
     }
     
@@ -35,7 +31,7 @@ public class SparseDoubleMatrix {
      * @param m
      * @return 
      */
-    private static double[] rollout(Sparsity sparsity, double[][] m){
+    private static double[] rollout(MatrixSparsity sparsity, double[][] m){
         int[] colind = sparsity.getcolind();
         int[] row = sparsity.getrow();
         double[] result = new double[sparsity.getrow().length];
@@ -52,7 +48,7 @@ public class SparseDoubleMatrix {
         return result;
     }
     
-    public Sparsity getSparsity(){
+    public MatrixSparsity getSparsity(){
         return sparsity;
     }
     public double[] getData(){
@@ -118,4 +114,12 @@ public class SparseDoubleMatrix {
         sb.append("\n");
         return sb.toString();
     }
+
+    @Override
+    public iDoubleMatrix transpose() {
+        //TODO
+        // sehr ineffiziente Implementierung, da sparsity nicht genutzt wird
+        return new SparseDoubleMatrix((new DenseDoubleMatrix(toArr())).transpose().toArr());
+    }
+
 }
