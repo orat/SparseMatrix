@@ -31,7 +31,7 @@ public class SparseStringColumnVector extends SparseStringVector {
                 row[j] = j++;
             }
         }
-        sparsity = new ColumnVectorSparsity(m.length, nonZeros, row);
+        sparsity = new ColumnVectorSparsity(m.length, /*nonZeros,*/ row);
     }
     
     

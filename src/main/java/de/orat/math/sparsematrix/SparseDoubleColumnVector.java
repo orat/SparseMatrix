@@ -29,7 +29,7 @@ public class SparseDoubleColumnVector extends SparseDoubleVector {
                 row[j] = j++;
             }
         }
-        sparsity = new ColumnVectorSparsity(m.length, nonZeros, row);
+        sparsity = new ColumnVectorSparsity(m.length, /*nonZeros,*/ row);
     }
 
     // not yet tested

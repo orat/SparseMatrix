@@ -1,5 +1,10 @@
 package de.orat.math.sparsematrix;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * MatrixSparsity of a column vector.
  * 
@@ -7,9 +12,12 @@ package de.orat.math.sparsematrix;
  */
 public class ColumnVectorSparsity extends MatrixSparsity {
     
-    public ColumnVectorSparsity(int n_row, int nonZeros, int[] row){
-        super(n_row, 1, new int[]{nonZeros}, row);
+    public ColumnVectorSparsity(int n_row, int[] row){
+        super(n_row, 1, new int[]{row.length}, row);
     }
+    /*public ColumnVectorSparsity(int n_row, int nonZeros, int[] row){
+        super(n_row, 1, new int[]{nonZeros}, row);
+    }*/
     public ColumnVectorSparsity(double[] vec){
         super(create2dim(vec));
     }
@@ -33,10 +41,28 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         //TODO
         // sehr ineffiziente Implementierung
         double[] vec = new double[n_row];
-        for (int i=0;i<row.length;i++){
-            vec[row[i]] = 1;
+        for (int i=0;i<rows.length;i++){
+            vec[rows[i]] = 1;
         }
         return new RowVectorSparsity(vec);
+    }
+    
+    public ColumnVectorSparsity intersect(ColumnVectorSparsity sparsity){
+        if (sparsity.getn_row() != getn_row()){
+            throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
+                    String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
+        }
+        List<Integer> rows2 = Arrays.stream(sparsity.getrow())     // IntStream
+                         .boxed()             // Stream<Integer>
+                         .collect(Collectors.toList());
+        List<Integer> resultIndices = new ArrayList<>();
+        for (int i=0;i<rows.length;i++){
+            if (rows2.contains(this.rows[i])){
+                resultIndices.add(rows[i]);
+            }
+        }
+        int[] nonzeros = resultIndices.stream().mapToInt(Integer::intValue).toArray();
+        return new ColumnVectorSparsity(getn_row(), nonzeros);
     }
     
     

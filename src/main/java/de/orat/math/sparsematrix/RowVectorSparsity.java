@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * MatrixSparsity of a row vector.
+ * MatrixSparsity of a rows vector.
  * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
@@ -34,8 +34,8 @@ public class RowVectorSparsity extends MatrixSparsity {
         //TODO
         // sehr ineffiziente Implementierung
         double[] vec = new double[n_col];
-        for (int i=0;i<row.length;i++){
-            vec[row[i]] = 1;
+        for (int i=0;i<rows.length;i++){
+            vec[rows[i]] = 1;
         }
         return new ColumnVectorSparsity(vec);
      }

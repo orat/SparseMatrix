@@ -15,13 +15,13 @@ public class MatrixSparsity {
     final int n_row;
     final int n_col;
     final int[] colind; // cumulative count of non zeros for each column, started with 0; length == number of columns +1 
-    final int[] row;    // rowindex for each non zero value, row.length == number of non zeros
+    final int[] rows;    // rowindex for each non zero value, rows.length == number of non zeros
     
     public MatrixSparsity(int n_row, int n_col, int[] colind, int[] row){
         this.n_row = n_row;
         this.n_col = n_col;
         this.colind = colind;
-        this.row = row;
+        this.rows = row;
     }
     
     /**
@@ -40,7 +40,7 @@ public class MatrixSparsity {
                     String.valueOf(n_row)+", n_col = "+String.valueOf(n_col));
         if (colind[c+1] < 1) return false;
         for (int i= colind[c];i< colind[c+1];i++){
-            if (row[i] == r) return true;
+            if (rows[i] == r) return true;
         }
         return false;
     }
@@ -67,13 +67,13 @@ public class MatrixSparsity {
         sb.append(String.valueOf(colind[colind.length-1]));
         sb.append("]\n");
         
-        // row
+        // rows
         sb.append("row=[");
-        for (int i=0;i<row.length-1;i++){
-            sb.append(String.valueOf(row[i]));
+        for (int i=0;i<rows.length-1;i++){
+            sb.append(String.valueOf(rows[i]));
             sb.append(",");
         }
-        sb.append(String.valueOf(row[row.length-1]));
+        sb.append(String.valueOf(rows[rows.length-1]));
         sb.append("]\n");
         return sb.toString();
     }
@@ -88,7 +88,7 @@ public class MatrixSparsity {
         return colind;
     }
     public int[] getrow(){
-        return row;
+        return rows;
     }
     
     /**
@@ -113,7 +113,7 @@ public class MatrixSparsity {
                 }
             }
         }
-        row = rowList.stream().mapToInt(d -> d).toArray();
+        rows = rowList.stream().mapToInt(d -> d).toArray();
     }
     
     /**
@@ -137,7 +137,7 @@ public class MatrixSparsity {
                 }
             }
         }
-        row = rowList.stream().mapToInt(d -> d).toArray();
+        rows = rowList.stream().mapToInt(d -> d).toArray();
     }
     
     // not yet tested
