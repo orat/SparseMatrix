@@ -13,11 +13,14 @@ import java.util.stream.Collectors;
 public class ColumnVectorSparsity extends MatrixSparsity {
     
     public ColumnVectorSparsity(int n_row, int[] row){
-        super(n_row, 1, new int[]{row.length}, row);
+        super(n_row, 1, new int[]{0,row.length}, row);
     }
     /*public ColumnVectorSparsity(int n_row, int nonZeros, int[] row){
         super(n_row, 1, new int[]{nonZeros}, row);
     }*/
+    /**
+    * @param vec only the non-zero values define the sparsity
+     */
     public ColumnVectorSparsity(double[] vec){
         super(create2dim(vec));
     }
@@ -48,6 +51,8 @@ public class ColumnVectorSparsity extends MatrixSparsity {
     }
     
     public ColumnVectorSparsity intersect(ColumnVectorSparsity sparsity){
+        //TODO
+        // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
         if (sparsity.getn_row() != getn_row()){
             throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
                     String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
