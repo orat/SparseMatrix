@@ -15,11 +15,9 @@ public class ColumnVectorSparsity extends MatrixSparsity {
     public ColumnVectorSparsity(int n_row, int[] row){
         super(n_row, 1, new int[]{0,row.length}, row);
     }
-    /*public ColumnVectorSparsity(int n_row, int nonZeros, int[] row){
-        super(n_row, 1, new int[]{nonZeros}, row);
-    }*/
+    
     /**
-    * @param vec only the non-zero values define the sparsity
+     * @param vec only the non-zero values define the sparsity
      */
     public ColumnVectorSparsity(double[] vec){
         super(create2dim(vec));
@@ -32,6 +30,16 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         return result;
     }
     
+    public static ColumnVectorSparsity dense(int rows){
+        return new ColumnVectorSparsity(rows, createDenseRows(rows));
+    }
+    private static int[] createDenseRows(int rows){
+        int[] result = new int[rows];
+        for (int i=0;i<rows;i++){
+            result[i] = i;
+        }
+        return result;
+    }
     public RowVectorSparsity transpose(){
         // Beginn einer effizienteren Implementierung
         //TODO
