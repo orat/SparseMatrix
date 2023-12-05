@@ -33,7 +33,7 @@ public class ColumnVectorSparsity extends MatrixSparsity {
     public static ColumnVectorSparsity dense(int rows){
         return new ColumnVectorSparsity(rows, createDenseRows(rows));
     }
-    private static int[] createDenseRows(int rows){
+    protected static int[] createDenseRows(int rows){
         int[] result = new int[rows];
         for (int i=0;i<rows;i++){
             result[i] = i;
