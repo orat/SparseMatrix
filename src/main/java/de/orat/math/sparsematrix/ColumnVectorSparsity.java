@@ -51,8 +51,6 @@ public class ColumnVectorSparsity extends MatrixSparsity {
     }
     
     public ColumnVectorSparsity intersect(ColumnVectorSparsity sparsity){
-        //TODO
-        // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
         if (sparsity.getn_row() != getn_row()){
             throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
                     String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
@@ -67,6 +65,8 @@ public class ColumnVectorSparsity extends MatrixSparsity {
             }
         }
         int[] nonzeros = resultIndices.stream().mapToInt(Integer::intValue).toArray();
+        //TODO
+        // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
         return new ColumnVectorSparsity(getn_row(), nonzeros);
     }
     

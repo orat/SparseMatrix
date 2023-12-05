@@ -24,6 +24,30 @@ public class MatrixSparsity {
         this.rows = row;
     }
     
+    public static MatrixSparsity dense(int row, int col) {
+        return new MatrixSparsity(row, col, createDenseColint(row, col), 
+                                     createDenseRow(row, col));
+    }
+    
+    private static int[] createDenseColint(int n_row, int n_col){
+        int[] result = new int[n_col+1];
+        for (int i=1;i<n_col+1;i++){
+            result[i] = result[i-1]+n_row;
+        }
+        return result;
+    }
+    
+    private static int[] createDenseRow(int n_row, int n_col){
+        int[] nonZeroRows = new int[n_row*n_col];
+        int i=0;
+        for (int col=0;col<n_col;col++){
+            for (int row=0;row<n_row;row++){
+                nonZeroRows[i++] = row;
+            }
+        }
+        return nonZeroRows;
+    }
+    
     /**
      * scheint zu funktionieren
      * TODO test ist noch zu vervollständigen
@@ -92,8 +116,8 @@ public class MatrixSparsity {
     }
     
     /**
-     * Werte die exakt 0 sind als strukturell 0 ansehen und entsprechend
-     * ein sparsity objekt erzeugen.
+     * Werte die exakt 0 sind werden als strukturell 0 ansehen und entsprechend
+     * wird das sparsity Objekt erzeugt.
      * 
      * @param m 
      */
@@ -138,20 +162,5 @@ public class MatrixSparsity {
             }
         }
         rows = rowList.stream().mapToInt(d -> d).toArray();
-    }
-    
-    // not yet tested
-    // geht das nicht mit einer effizienteren Implementierung, die diese arrays
-    // nicht anlegt, bzw. nur bei Bedarf?
-    // Also eine Dense class die das effizienter implementiert
-    // aber dann brauche ich vermutlich ein MatrixSparsity-Interface da ja Dense von
-    // MatrixSparsity erben muss ich aber die Datenstrukturen von Spasity gar nicht will
-    //TODO
-    public static MatrixSparsity dense(int nrow, int ncol){
-        int[] colind = new int[ncol+1];
-        int[] row = new int[nrow*ncol];
-        //TODO
-        // array-values richtig auffüllen
-        return new MatrixSparsity(nrow, ncol, colind, row);
     }
 }
