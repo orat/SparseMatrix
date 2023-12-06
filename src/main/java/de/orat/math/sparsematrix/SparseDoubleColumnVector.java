@@ -34,7 +34,7 @@ public class SparseDoubleColumnVector extends SparseDoubleVector {
 
     // not yet tested
     @Override
-    public double[][] toArr() {
+    public double[][] toMatrix() {
         double[][] result = new double[sparsity.getn_row()][1];
         int[] row = sparsity.getrow();
         for (int i=0;i<data.length;i++){
@@ -46,6 +46,6 @@ public class SparseDoubleColumnVector extends SparseDoubleVector {
     @Override
     public SparseDoubleRowVector transpose() {
         throw new RuntimeException ("not yet implemented");
-        //return new SparseDoubleRowVector(sparsity.transpose(), toArr());
+        //return new SparseDoubleRowVector(sparsity.transpose(), toMatrix());
     }
 }

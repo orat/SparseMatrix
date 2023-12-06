@@ -11,7 +11,7 @@ public class DenseDoubleMatrix implements iDoubleMatrix {
         this.data = m;
     }
     @Override
-    public double[][] toArr() {
+    public double[][] toMatrix() {
         double[][] result = new double[data.length][data[0].length];
         for (int i=0;i<data.length;i++){
             System.arraycopy(data[i], 0, result[i], 0, data[0].length);

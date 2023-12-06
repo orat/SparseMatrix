@@ -6,7 +6,7 @@ package de.orat.math.sparsematrix;
 public interface iDoubleMatrix {
     
     // always copy the data
-    public double[][] toArr();
+    public double[][] toMatrix();
     public String toString();
     public iDoubleMatrix transpose();
 }

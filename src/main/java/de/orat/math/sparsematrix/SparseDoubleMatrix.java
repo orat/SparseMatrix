@@ -55,7 +55,7 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         return data;
     }
     
-    public double[][] toArr(){
+    public double[][] toMatrix(){
         int[] colind = sparsity.getcolind();
         int[] row = sparsity.getrow();
         double[][] result = new double[sparsity.getn_row()][sparsity.getn_col()];
@@ -99,7 +99,7 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     public String toString(boolean asMatrix){
         StringBuilder sb = new StringBuilder();
         if (asMatrix){
-            double[][] m = toArr();
+            double[][] m = toMatrix();
             sb.append(toString(m));
         } else {
             sb.append(sparsity.toString());
@@ -119,7 +119,7 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     public iDoubleMatrix transpose() {
         //TODO
         // sehr ineffiziente Implementierung, da sparsity nicht genutzt wird
-        return new SparseDoubleMatrix((new DenseDoubleMatrix(toArr())).transpose().toArr());
+        return new SparseDoubleMatrix((new DenseDoubleMatrix(toMatrix())).transpose().toMatrix());
     }
 
 }

@@ -56,7 +56,7 @@ public class TestSparseDoubleMatrix {
         assertTrue(equals(sparsity.getcolind(), colind));
         assertTrue(equals(sparsity.getrow(), row));
         
-        double[][] b = sm.toArr();
+        double[][] b = sm.toMatrix();
         assertTrue(equals(a, b));
        
         

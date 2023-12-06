@@ -12,7 +12,7 @@ public class SparseDoubleRowVector extends SparseDoubleVector {
         this.data = data;
     }
     @Override
-    public double[][] toArr() {
+    public double[][] toMatrix() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

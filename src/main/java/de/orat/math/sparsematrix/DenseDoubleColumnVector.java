@@ -8,9 +8,20 @@ public class DenseDoubleColumnVector extends DoubleVector {
     public DenseDoubleColumnVector(double[] data) {
         super(data);
     }
+    public DenseDoubleColumnVector(int n_rows, double[] nonzeros, int[] rows){
+        super(createDoubleArray(n_rows, nonzeros, rows));
+    }
+    private static double[] createDoubleArray(int n_rows, double[] nonzeros, int[] rows){
+        double[] result = new double[n_rows];
+        for (int i=0;i<rows.length;i++){
+            result[rows[i]] = nonzeros[i];
+        }
+        return result;
+    }
+    
 
     @Override
-    public double[][] toArr() {
+    public double[][] toMatrix() {
         double[][] result = new double[data.length][1];
         for (int i=0;i<data.length;i++){
             result[i][1] = data[i];

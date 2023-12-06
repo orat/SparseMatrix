@@ -10,7 +10,7 @@ public class DenseDoubleRowVector extends DoubleVector {
     }
 
     @Override
-    public double[][] toArr() {
+    public double[][] toMatrix() {
         double[][] result = new double[1][data.length];
         System.arraycopy(data, 0, result[1], 0, data.length);
         return result;
