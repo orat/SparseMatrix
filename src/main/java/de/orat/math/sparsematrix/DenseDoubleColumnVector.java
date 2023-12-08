@@ -28,6 +28,12 @@ public class DenseDoubleColumnVector extends DoubleVector {
         }
         return result;
     }
+    
+    public double[] toArray(){
+        double[] result = new double[data.length];
+        System.arraycopy(data, 0, result, 0, data.length);
+        return result;
+    }
 
     @Override
     public DenseDoubleRowVector transpose() {
