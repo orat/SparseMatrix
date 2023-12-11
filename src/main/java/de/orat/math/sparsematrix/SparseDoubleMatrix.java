@@ -23,6 +23,11 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         data = rollout(sparsity, m);
     }
     
+    public SparseDoubleMatrix(MatrixSparsity sparsity, double[] nonzeros){
+        this.sparsity = sparsity;
+        this.data = nonzeros;
+    }
+    
     /**
      * Unroll the given matrix corresponding to the given sparsity.
      * 
@@ -121,5 +126,4 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         // sehr ineffiziente Implementierung, da sparsity nicht genutzt wird
         return new SparseDoubleMatrix((new DenseDoubleMatrix(toMatrix())).transpose().toMatrix());
     }
-
 }

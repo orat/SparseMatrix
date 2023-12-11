@@ -28,7 +28,6 @@ public class MatrixSparsity {
         return new MatrixSparsity(row, col, createDenseColint(row, col), 
                                      createDenseRow(row, col));
     }
-    
     public boolean isDense(){
         return rows.length == n_row*n_col;
     }
@@ -52,6 +51,25 @@ public class MatrixSparsity {
         return nonZeroRows;
     }
     
+    public static MatrixSparsity diagonal(int size){
+        return new MatrixSparsity(size, size, createDiagonalColint(size), createDiagonalRow(size));
+    }
+    
+    private static int[] createDiagonalColint(int size){
+        int[] result = new int[size+1];
+        int val=0;
+        for (int i=1;i<size+1;i++){
+            result[i] = val++;
+        }
+        return result;
+    }
+    private static int[] createDiagonalRow(int size){
+        int[] result = new int[size];
+        for (int i=0;i<size;i++){
+            result[i] = i;
+        }
+        return result;
+    }
     /**
      * scheint zu funktionieren
      * TODO test ist noch zu vervollständigen
