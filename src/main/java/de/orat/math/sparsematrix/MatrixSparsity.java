@@ -101,7 +101,9 @@ public class MatrixSparsity {
             sb.append(String.valueOf(rows[i]));
             sb.append(",");
         }
-        sb.append(String.valueOf(rows[rows.length-1]));
+        if(rows.length > 0){
+            sb.append(String.valueOf(rows[rows.length-1]));
+        }
         sb.append("]\n");
         return sb.toString();
     }

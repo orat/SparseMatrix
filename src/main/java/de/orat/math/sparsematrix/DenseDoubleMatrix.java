@@ -5,8 +5,11 @@ package de.orat.math.sparsematrix;
  */
 public class DenseDoubleMatrix implements iDoubleMatrix {
 
-    protected double[][] data;
+    protected final double[][] data;
     
+    public DenseDoubleMatrix(int n_row, int n_col){
+        data = new double[n_row][n_col];
+    }
     public DenseDoubleMatrix(double[][] m){
         this.data = m;
     }
@@ -19,6 +22,9 @@ public class DenseDoubleMatrix implements iDoubleMatrix {
         return result;
     }
 
+    public void setValue(int row, int col, double value){
+        data[row][col] = value;
+    }
     @Override
     public iDoubleMatrix transpose() {
         double[][] result = new double[data[0].length][data.length];
