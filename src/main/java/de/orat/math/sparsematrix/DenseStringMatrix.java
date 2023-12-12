@@ -32,10 +32,10 @@ public class DenseStringMatrix implements iStringMatrix {
     public String get(int row, int col){
         return data[row][col];
     }
-    public int getRow(){
+    public int getRows(){
         return data.length;
     }
-    public int getCol(){
+    public int getCols(){
         return data[0].length;
     }
     public String toString(){

@@ -59,7 +59,7 @@ public class MatrixSparsity {
         int[] result = new int[size+1];
         int val=0;
         for (int i=1;i<size+1;i++){
-            result[i] = val++;
+            result[i] = ++val;
         }
         return result;
     }
