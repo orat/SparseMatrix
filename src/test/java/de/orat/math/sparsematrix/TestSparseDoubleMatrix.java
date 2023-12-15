@@ -87,8 +87,20 @@ public class TestSparseDoubleMatrix {
         SparseStringMatrix ssm = new SparseStringMatrix(test);
         String[][] sb = ssm.toArr();
         assertTrue(equals(test, sb));
-        
-        
-        
+    }
+    
+    @org.junit.jupiter.api.Test
+    public void testSparsityIsNonZero(){
+        System.out.println("----------------------------------------------------- test sparsity.isNonZero()-------");
+        double[] values = new double[]{1,0,3,4,0,0,6};
+        ColumnVectorSparsity sparsity = new ColumnVectorSparsity(values);
+        System.out.println(sparsity.toString());
+        for (int i=0;i<values.length;i++){
+            if (sparsity.isNonZero(i, 0)){
+                    System.out.print("*");
+            } else {
+                System.out.print("_");
+            }
+        }
     }
 }

@@ -7,6 +7,18 @@ public class SparseDoubleColumnVector extends SparseDoubleVector {
     
     private final ColumnVectorSparsity sparsity;
     
+    /**
+     * Creates a double column vector with the given value at first element and
+     * all others zero.
+     * 
+     * @param value
+     * @param size 
+     */
+    public SparseDoubleColumnVector(double value, int size){
+        this.sparsity = new ColumnVectorSparsity(size, new int[]{0});
+        this.data = new double[]{value};
+    }
+    
     public SparseDoubleColumnVector(ColumnVectorSparsity sparsity, double[] data){
         this.sparsity = sparsity;
         this.data = data;

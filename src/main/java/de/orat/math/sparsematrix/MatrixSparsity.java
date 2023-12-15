@@ -54,7 +54,6 @@ public class MatrixSparsity {
     public static MatrixSparsity diagonal(int size){
         return new MatrixSparsity(size, size, createDiagonalColint(size), createDiagonalRow(size));
     }
-    
     private static int[] createDiagonalColint(int size){
         int[] result = new int[size+1];
         int val=0;
@@ -70,13 +69,42 @@ public class MatrixSparsity {
         }
         return result;
     }
+    
+    /**
+     * 
+     * @param values for all diagonal elements, zeros are interpreted as structural zeros
+     * @return 
+     */
+    public static MatrixSparsity diagonal(double[] values){
+             return new MatrixSparsity(values.length, values.length, 
+                     createDiagonalColint(values), createDiagonalRow(values));
+    }
+    private static int[] createDiagonalColint(double[] values){
+        int[] result = new int[values.length+1];
+        int val=0;
+        for (int i=1;i<values.length+1;i++){
+            if (values[i] != 0){
+                result[i] = ++val;
+            }
+        }
+        return result;
+    }
+    private static int[] createDiagonalRow(double[] values){
+        List<Integer> nonzeros = new ArrayList<>();
+        for (int i=0;i<values.length;i++){
+            if (values[i] != 0){
+                nonzeros.add(i);
+            }
+        }
+        return nonzeros.stream().mapToInt(d -> d).toArray();
+    }
     /**
      * scheint zu funktionieren
      * TODO test ist noch zu vervollständigen
      * 
-     * @param r
-     * @param c
-     * @return 
+     * @param r row index
+     * @param c column index
+     * @return true, if the given cell is non zero
      * @throws IllegalArgumentException if the given arguments do not fit to the matrix dimensions
      */
     public boolean isNonZero(int r, int c){
@@ -95,17 +123,25 @@ public class MatrixSparsity {
         StringBuilder sb = new StringBuilder();
         
         // rows
-        sb.append("n_row=");
-        sb.append(String.valueOf(n_row));
-        sb.append("\n");
+        //sb.append("n_row=");
+        //sb.append(String.valueOf(n_row));
+        //sb.append("\n");
         
         // cols
-        sb.append("n_col=");
+        //sb.append("n_col=");
+        //sb.append(String.valueOf(n_col));
+        //sb.append("\n");
+        
+        sb.append(String.valueOf(n_row));
+        sb.append("x");
         sb.append(String.valueOf(n_col));
+        sb.append(",");
+        sb.append(String.valueOf(rows.length));
+        sb.append("nz");
         sb.append("\n");
         
         // colind
-        sb.append("colind=[");
+        sb.append("colind:  [");
         for (int i=0;i<colind.length-1;i++){
             sb.append(String.valueOf(colind[i]));
             sb.append(",");
@@ -114,7 +150,7 @@ public class MatrixSparsity {
         sb.append("]\n");
         
         // rows
-        sb.append("row=[");
+        sb.append("row:     [");
         for (int i=0;i<rows.length-1;i++){
             sb.append(String.valueOf(rows[i]));
             sb.append(",");
