@@ -104,4 +104,8 @@ public class SparseDoubleColumnVector extends DoubleVector {
         // data from columnVector a  to nonzeros addieren
         return new SparseDoubleColumnVector(resultSparsity, nonzeros);
     }
+    
+    public double[] nonzeros(){
+        return data;
+    }
 }
