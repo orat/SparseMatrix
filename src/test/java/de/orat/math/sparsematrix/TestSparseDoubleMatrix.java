@@ -1,6 +1,7 @@
 package de.orat.math.sparsematrix;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
@@ -102,5 +103,18 @@ public class TestSparseDoubleMatrix {
                 System.out.print("_");
             }
         }
+    }
+    
+    @Test
+    public void testSparseDoubleColumnVectorSummation(){
+        System.out.println("----------------------------------------------------- test sparse double column vector summation -------");
+        
+        ColumnVectorSparsity sparsity_a = new ColumnVectorSparsity(7, new int[]{1,2,3});
+        SparseDoubleColumnVector a = new SparseDoubleColumnVector(sparsity_a, new double[]{1,2,3});
+        ColumnVectorSparsity sparsity_b = new ColumnVectorSparsity(7, new int[]{3,5,6});
+        SparseDoubleColumnVector b = new SparseDoubleColumnVector(sparsity_b, new double[]{4,5,6});
+        SparseDoubleColumnVector result = a.add(b);
+        // 0, 1, 2, 7, 0, 5, 6, 0
+        System.out.println(result);
     }
 }

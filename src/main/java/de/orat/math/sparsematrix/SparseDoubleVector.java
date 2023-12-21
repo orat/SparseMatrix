@@ -6,4 +6,7 @@ package de.orat.math.sparsematrix;
 public abstract class SparseDoubleVector implements iDoubleMatrix {
 
     protected double[] data;
+    public double[] nonzeros(){
+        return data;
+    }
 }

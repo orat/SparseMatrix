@@ -16,6 +16,22 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         super(n_row, 1, new int[]{0,row.length}, row);
     }
     
+    // very slow implementation
+    /**
+     * 
+     * @param rowIndex
+     * @return -1 if the given index is structural zero
+     * @throws IllegalArgumentException if the given index is out of the columns vector length
+     */
+    public int determineIndexOfRow(int rowIndex){
+        if (rowIndex >= getn_row()) throw new IllegalArgumentException("row =="+String.valueOf(rowIndex)+
+                " is >= nrow="+String.valueOf(n_row));
+        for (int i=0;i<rows.length;i++){
+            if (rows[i] == rowIndex) return i;
+        }
+        return -1;
+    }
+    
     /**
      * @param vec only the non-zero values define the sparsity
      */
@@ -58,7 +74,31 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         return new RowVectorSparsity(vec);
     }
     
-    public ColumnVectorSparsity intersect(ColumnVectorSparsity sparsity){
+    // oder-Verknüpfung
+    // mir scheint rows die in beiden vorkommen erscheinen doppelt im output
+    //FIXME
+    public ColumnVectorSparsity join(ColumnVectorSparsity sparsity){
+        if (sparsity.getn_row() != getn_row()){
+            throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
+                    String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
+        }
+        List<Integer> result = Arrays.stream(getrow())     // IntStream
+                         .boxed()             // Stream<Integer>
+                         .collect(Collectors.toList());
+        List<Integer> rows2 = Arrays.stream(sparsity.getrow())     // IntStream
+                         .boxed()             // Stream<Integer>
+                         .collect(Collectors.toList());
+        rows2.removeAll(result);
+        result.addAll(rows2);
+        
+        int[] rows = result.stream().mapToInt(Integer::intValue).toArray();
+        //TODO
+        // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
+        return new ColumnVectorSparsity(result.size(), rows);
+    }
+    
+    // und-Verknüpfung
+    public ColumnVectorSparsity meet(ColumnVectorSparsity sparsity){
         if (sparsity.getn_row() != getn_row()){
             throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
                     String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
