@@ -46,6 +46,9 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         return result;
     }
     
+    public static ColumnVectorSparsity empty(int rows){
+        return new ColumnVectorSparsity(rows, new int[]{});
+    }
     public static ColumnVectorSparsity dense(int rows){
         return new ColumnVectorSparsity(rows, createDenseRows(rows));
     }

@@ -117,4 +117,13 @@ public class TestSparseDoubleMatrix {
         // 0, 1, 2, 7, 0, 5, 6, 0
         System.out.println(result);
     }
+    
+    @Test
+    public void testDiagonalMatrixSparsityConcstructor(){
+        System.out.println("----------------------------------------------------- test sparse diagonal matrix creation -------");
+       
+        double[] values = new double[]{1,2,3,4,5};
+        MatrixSparsity sparsity = MatrixSparsity.diagonal(values);
+        System.out.println(sparsity.toString());
+    } 
 }
