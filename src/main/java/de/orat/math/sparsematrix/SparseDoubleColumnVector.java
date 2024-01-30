@@ -115,4 +115,13 @@ public class SparseDoubleColumnVector extends DoubleVector {
     public double[] nonzeros(){
         return data;
     }
+    
+    public double[] toArray(){
+        double[] result = new double[sparsity.getn_row()];
+        int[] row = sparsity.getrow();
+        for (int i=0;i<data.length;i++){
+            result[row[i]] = data[i];
+        }
+        return result;
+    }
 }

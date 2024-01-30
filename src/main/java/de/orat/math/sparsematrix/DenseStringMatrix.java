@@ -46,20 +46,28 @@ public class DenseStringMatrix implements iStringMatrix {
             sb.append("  {");
             // loop over columns
             for (int col=0;col<data[0].length-1;col++){
-                sb.append(data[row][col]);
+                String cellValue = data[row][col];
+                if (cellValue == null) cellValue = "00";
+                sb.append(cellValue);
                 sb.append(", ");
             }
-            sb.append(data[row][data[0].length-1]);
+            String cellValue = data[row][data[0].length-1];
+            if (cellValue == null) cellValue = "00";
+            sb.append(cellValue);
             sb.append("},\n");
         }
         // last row
         sb.append("  {");
         // loop over columns
         for (int col=0;col<data[0].length-1;col++){
-            sb.append(data[data.length-1][col]);
+            String cellValue = data[data.length-1][col];
+            if (cellValue == null) cellValue = "00";
+            sb.append(cellValue);
             sb.append(", ");
         }
-        sb.append(data[data.length-1][data[0].length-1]);
+        String cellValue = data[data.length-1][data[0].length-1];
+        if (cellValue == null) cellValue = "00";
+        sb.append(cellValue);
         sb.append("}\n");
         sb.append("}");
         return sb.toString();

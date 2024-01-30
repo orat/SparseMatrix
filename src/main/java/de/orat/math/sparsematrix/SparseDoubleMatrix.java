@@ -45,8 +45,8 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         for (int col=0;col<colind.length-1;col++){ // col ok
             // loop over all nonzeros in a column col
             for (int j=colind[col];j<colind[col+1];j++){
-               System.out.println("["+String.valueOf(k)+"]="+" col="+String.valueOf(col)+
-                       ", row="+String.valueOf(row[k])+" value="+String.valueOf( m[row[k]][col]));
+               //System.out.println("["+String.valueOf(k)+"]="+" col="+String.valueOf(col)+
+               //        ", row="+String.valueOf(row[k])+" value="+String.valueOf( m[row[k]][col]));
                result[k] = m[row[k++]][col]; //FIXME Index 3 out of bounds for length = 3
             }
         }

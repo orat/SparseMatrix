@@ -24,6 +24,10 @@ public class MatrixSparsity {
         this.rows = row;
     }
     
+    public MatrixSparsity transpose(){
+        throw new UnsupportedOperationException("not yet implemented!");
+    }
+    
     public static MatrixSparsity dense(int row, int col) {
         return new MatrixSparsity(row, col, createDenseColint(row, col), 
                                      createDenseRow(row, col));
@@ -84,8 +88,9 @@ public class MatrixSparsity {
         int val=0;
         for (int i=1;i<values.length+1;i++){
             if (values[i-1] != 0){
-                result[i] = ++val;
+                val++;
             }
+            result[i] = val;
         }
         return result;
     }

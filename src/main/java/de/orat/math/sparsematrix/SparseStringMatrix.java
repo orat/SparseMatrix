@@ -44,8 +44,8 @@ public class SparseStringMatrix implements iStringMatrix {
         for (int col=0;col<colind.length-1;col++){ // col ok
             // loop over all nonzeros in a column col
             for (int j=colind[col];j<colind[col+1];j++){
-               System.out.println("["+String.valueOf(k)+"]="+" col="+String.valueOf(col)+
-                       ", row="+String.valueOf(row[k])+" value="+m[row[k]][col]);
+               //System.out.println("["+String.valueOf(k)+"]="+" col="+String.valueOf(col)+
+               //        ", row="+String.valueOf(row[k])+" value="+m[row[k]][col]);
                result[k] = m[row[k++]][col]; //FIXME Index 3 out of bounds for length = 3
             }
         }
@@ -59,6 +59,11 @@ public class SparseStringMatrix implements iStringMatrix {
         return data;
     }
     
+    /**
+     * For structural zeros the the corresponding result cell to null.
+     * 
+     * @return 
+     */
     public String[][] toArr(){
         int[] colind = sparsity.getcolind();
         int[] row = sparsity.getrow();
@@ -76,33 +81,46 @@ public class SparseStringMatrix implements iStringMatrix {
     
     public static String toString(String[][] m){
         StringBuilder sb = new StringBuilder();
-        sb.append("{\n");
-        // loop over rows
-        for (int row=0;row<m.length-1;row++){
+        // mehr als eine Spalte
+        if (m[0].length > 1){
+            sb.append("{\n");
+            // loop over rows
+            for (int row=0;row<m.length-1;row++){
+                sb.append("  {");
+                // loop over columns
+                for (int col=0;col<m[0].length-1;col++){
+                    String value = m[row][col];
+                    if (value != null){
+                        sb.append(value);
+                    } else {
+                        sb.append(" ");
+                    }
+                    sb.append(", ");
+                }
+                sb.append(m[row][m[0].length-1]);
+                sb.append("},\n");
+            }
+            // last row
             sb.append("  {");
             // loop over columns
             for (int col=0;col<m[0].length-1;col++){
-                String value = m[row][col];
-                if (value != null){
-                    sb.append(value);
-                } else {
-                    sb.append(" ");
-                }
+                sb.append(m[m.length-1][col]);
                 sb.append(", ");
             }
-            sb.append(m[row][m[0].length-1]);
-            sb.append("},\n");
+            sb.append(m[m.length-1][m[0].length-1]);
+            sb.append("}\n");
+            sb.append("}");
+        // eine Spalte
+        } else {
+            sb.append("T{");
+            // loop over rows
+            for (int row=0;row<m.length-1;row++){
+                sb.append(m[row][0]);
+                sb.append(", ");
+            }
+            sb.append(m[m.length-1][0]);
+            sb.append("}");
         }
-        // last row
-        sb.append("  {");
-        // loop over columns
-        for (int col=0;col<m[0].length-1;col++){
-            sb.append(m[m.length-1][col]);
-            sb.append(", ");
-        }
-        sb.append(m[m.length-1][m[0].length-1]);
-        sb.append("}\n");
-        sb.append("}");
         return sb.toString();
     }
     
@@ -120,8 +138,8 @@ public class SparseStringMatrix implements iStringMatrix {
             }
             sb.append(String.valueOf(data[data.length-1]));
             sb.append("]");
+            sb.append("\n");
         }
-        sb.append("\n");
         return sb.toString();
     }
 
