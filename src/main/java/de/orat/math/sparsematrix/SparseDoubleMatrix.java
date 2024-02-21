@@ -56,7 +56,7 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     public MatrixSparsity getSparsity(){
         return sparsity;
     }
-    public double[] getData(){
+    public double[] nonzeros(){
         return data;
     }
     
