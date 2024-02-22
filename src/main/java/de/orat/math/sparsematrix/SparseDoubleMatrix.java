@@ -12,10 +12,15 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     private final MatrixSparsity sparsity;
     private double[] data;
     
+    public SparseDoubleMatrix(int rows, int cols){
+        this.sparsity = MatrixSparsity.empty(rows, cols);
+        this.data = new double[]{};
+    }
+    
     public SparseDoubleMatrix(double[][] m){
         System.out.println(toString(m));
         sparsity = new MatrixSparsity(m);
-        System.out.println(sparsity.toString());
+        //System.out.println(sparsity.toString());
         data = rollout(sparsity, m);
     }
     public SparseDoubleMatrix(MatrixSparsity sparsity, double[][] m){

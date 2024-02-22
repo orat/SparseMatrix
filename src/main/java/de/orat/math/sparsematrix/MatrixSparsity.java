@@ -36,6 +36,10 @@ public class MatrixSparsity {
         return rows.length == n_row*n_col;
     }
     
+    public static MatrixSparsity empty(int rows, int cols){
+        return new MatrixSparsity(rows, cols, new int[]{0}, new int[]{});
+    }
+    
     private static int[] createDenseColint(int n_row, int n_col){
         int[] result = new int[n_col+1];
         for (int i=1;i<n_col+1;i++){

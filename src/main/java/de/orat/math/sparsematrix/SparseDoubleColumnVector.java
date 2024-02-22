@@ -24,7 +24,7 @@ public class SparseDoubleColumnVector extends DoubleVector {
     public SparseDoubleColumnVector(int size){
         super(new double[]{});
         this.sparsity = ColumnVectorSparsity.empty(size);
-        this.data = new double[]{};
+        //this.data = new double[]{};
     }
     
     public SparseDoubleColumnVector(ColumnVectorSparsity sparsity, double[] nonzeros){
