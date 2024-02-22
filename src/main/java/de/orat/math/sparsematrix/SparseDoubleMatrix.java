@@ -124,6 +124,10 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         sb.append("\n");
         return sb.toString();
     }
+    
+    public String toString(){
+        return toString(true);
+    }
 
     @Override
     public iDoubleMatrix transpose() {
