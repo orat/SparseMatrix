@@ -19,6 +19,7 @@ public class SparseDoubleColumnVector extends DoubleVector {
         this.data = new double[]{value};
     }*/
     
+    
     // empty double column vector
     public SparseDoubleColumnVector(int size){
         super(new double[]{});
@@ -31,6 +32,10 @@ public class SparseDoubleColumnVector extends DoubleVector {
         this.sparsity = sparsity;
     }
     
+    public SparseDoubleColumnVector(SparseDoubleMatrix mv){
+        this(ColumnVectorSparsity.instance(mv.getSparsity()), mv.nonzeros());
+    }
+   
     // ungetested
     public SparseDoubleColumnVector(double[] m){
         super(determineNonzeros(m));

@@ -12,8 +12,15 @@ import java.util.stream.Collectors;
  */
 public class ColumnVectorSparsity extends MatrixSparsity {
     
-    public ColumnVectorSparsity(int n_row, int[] row){
-        super(n_row, 1, new int[]{0,row.length}, row);
+    public ColumnVectorSparsity(int n_row, int[] nonzeroIndizes){
+        super(n_row, 1, new int[]{0,nonzeroIndizes.length}, nonzeroIndizes);
+    }
+    
+    
+    public static ColumnVectorSparsity instance(MatrixSparsity sparsity){
+        int cols = sparsity.getn_col();
+        if (cols != 1) throw new IllegalArgumentException("col = "+String.valueOf(cols)+" != 1 is not allowed!");
+        return new ColumnVectorSparsity(sparsity.getn_row(), sparsity.getrow());
     }
     
     // very slow implementation
