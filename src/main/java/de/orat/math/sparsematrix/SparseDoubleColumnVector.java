@@ -84,7 +84,7 @@ public class SparseDoubleColumnVector extends DoubleVector {
         double[][] result = new double[sparsity.getn_row()][1];
         int[] row = sparsity.getrow();
         for (int i=0;i<data.length;i++){
-            result[row[i]][1] = data[i];
+            result[row[i]][0] = data[i];
         }
         return result;
     }

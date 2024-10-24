@@ -12,10 +12,9 @@ import java.util.stream.Collectors;
  */
 public class ColumnVectorSparsity extends MatrixSparsity {
     
-    public ColumnVectorSparsity(int n_row, int[] nonzeroIndizes){
-        super(n_row, 1, new int[]{0,nonzeroIndizes.length}, nonzeroIndizes);
+    public ColumnVectorSparsity(int n_row, int[] rows){
+        super(n_row, 1, new int[]{0,rows.length}, rows);
     }
-    
     
     public static ColumnVectorSparsity instance(MatrixSparsity sparsity){
         int cols = sparsity.getn_col();

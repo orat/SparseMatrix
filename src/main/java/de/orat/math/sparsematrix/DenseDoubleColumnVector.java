@@ -24,7 +24,7 @@ public class DenseDoubleColumnVector extends DoubleVector {
     public double[][] toMatrix() {
         double[][] result = new double[data.length][1];
         for (int i=0;i<data.length;i++){
-            result[i][1] = data[i];
+            result[i][0] = data[i];
         }
         return result;
     }
