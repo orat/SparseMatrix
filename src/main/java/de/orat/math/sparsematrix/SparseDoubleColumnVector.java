@@ -2,34 +2,24 @@ package de.orat.math.sparsematrix;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
+ * 
+ * 
  */
-public class SparseDoubleColumnVector extends DoubleVector {
+public class SparseDoubleColumnVector extends /*DoubleVector*/ SparseDoubleMatrix {
     
-    private final ColumnVectorSparsity sparsity;
-    
-    /**
-     * Creates a double column vector with the given value at first element and
-     * all others zero.
-     * 
-     * @param value
-     * @param size 
-     */
-    /*public SparseDoubleColumnVector(double value, int size){
-        this.sparsity = new ColumnVectorSparsity(size, new int[]{0});
-        this.data = new double[]{value};
-    }*/
-    
+    //private final ColumnVectorSparsity sparsity;
     
     // empty double column vector
     public SparseDoubleColumnVector(int size){
-        super(new double[]{});
-        this.sparsity = ColumnVectorSparsity.empty(size);
-        //this.data = new double[]{};
+        //super(new double[]{});
+        //this.sparsity = ColumnVectorSparsity.empty(size);
+        super(ColumnVectorSparsity.empty(size), new double[]{});
     }
     
     public SparseDoubleColumnVector(ColumnVectorSparsity sparsity, double[] nonzeros){
-        super(nonzeros);
-        this.sparsity = sparsity;
+        //super(nonzeros);
+        //this.sparsity = sparsity;
+        super(sparsity, nonzeros);
     }
     
     public SparseDoubleColumnVector(SparseDoubleMatrix mv){
@@ -38,8 +28,9 @@ public class SparseDoubleColumnVector extends DoubleVector {
    
     // ungetested
     public SparseDoubleColumnVector(double[] m){
-        super(determineNonzeros(m));
-        sparsity = new ColumnVectorSparsity(m.length, determineRows(m));
+        //super(determineNonzeros(m));
+        //sparsity = new ColumnVectorSparsity(m.length, determineRows(m));
+        super(new ColumnVectorSparsity(m.length, determineRows(m)), determineNonzeros(m));
     }
 
     private static double[] determineNonzeros(double[] m){
@@ -79,7 +70,7 @@ public class SparseDoubleColumnVector extends DoubleVector {
     }
     
     // not yet tested
-    @Override
+    /*@Override
     public double[][] toMatrix() {
         double[][] result = new double[sparsity.getn_row()][1];
         int[] row = sparsity.getrow();
@@ -87,7 +78,7 @@ public class SparseDoubleColumnVector extends DoubleVector {
             result[row[i]][0] = data[i];
         }
         return result;
-    }
+    }*/
 
     @Override
     public SparseDoubleRowVector transpose() {
@@ -95,19 +86,19 @@ public class SparseDoubleColumnVector extends DoubleVector {
         //return new SparseDoubleRowVector(sparsity.transpose(), toMatrix());
     }
     public ColumnVectorSparsity getSparsity(){
-        return sparsity;
+        return (ColumnVectorSparsity) sparsity;
     }
     
     // very slow implementation
     public SparseDoubleColumnVector add(SparseDoubleColumnVector b){
         ColumnVectorSparsity sparsity_b = b.getSparsity();
-        ColumnVectorSparsity resultSparsity = sparsity.join(sparsity_b);
+        ColumnVectorSparsity resultSparsity = getSparsity().join(sparsity_b);
         System.out.println(resultSparsity);
         double[] nonzeros = new double[resultSparsity.n_row];
         // data from columnVector a and b to nonzeros addieren
         for (int i=0;i<resultSparsity.getn_row();i++){
             int result_row = resultSparsity.getrow()[i];
-            int index_a = sparsity.determineIndexOfRow(result_row);
+            int index_a = getSparsity().determineIndexOfRow(result_row);
             if (index_a >=0) nonzeros[i] += data[index_a];
             int index_b = sparsity_b.determineIndexOfRow(result_row);
             if (index_b >=0) nonzeros[i] += data[index_b];

@@ -9,8 +9,8 @@ package de.orat.math.sparsematrix;
  */
 public class SparseDoubleMatrix implements iDoubleMatrix {
     
-    private final MatrixSparsity sparsity;
-    private double[] data;
+    final MatrixSparsity sparsity;
+    double[] data;
     
     public SparseDoubleMatrix(int rows, int cols){
         this.sparsity = MatrixSparsity.empty(rows, cols);

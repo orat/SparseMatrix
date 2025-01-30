@@ -126,6 +126,4 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
         return new ColumnVectorSparsity(getn_row(), nonzeros);
     }
-    
-    
 }
