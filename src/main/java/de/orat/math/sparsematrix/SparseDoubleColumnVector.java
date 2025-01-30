@@ -2,8 +2,6 @@ package de.orat.math.sparsematrix;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
- * 
- * 
  */
 public class SparseDoubleColumnVector extends /*DoubleVector*/ SparseDoubleMatrix {
     
@@ -20,6 +18,11 @@ public class SparseDoubleColumnVector extends /*DoubleVector*/ SparseDoubleMatri
         //super(nonzeros);
         //this.sparsity = sparsity;
         super(sparsity, nonzeros);
+        // 5 versus 7
+        if (sparsity.rows.length != nonzeros.length) throw 
+                new IllegalArgumentException("rows.length = "+
+                        String.valueOf(sparsity.rows.length)+" != nonzeros.length ="+ String.valueOf(nonzeros.length));
+        
     }
     
     public SparseDoubleColumnVector(SparseDoubleMatrix mv){
@@ -93,11 +96,12 @@ public class SparseDoubleColumnVector extends /*DoubleVector*/ SparseDoubleMatri
     public SparseDoubleColumnVector add(SparseDoubleColumnVector b){
         ColumnVectorSparsity sparsity_b = b.getSparsity();
         ColumnVectorSparsity resultSparsity = getSparsity().join(sparsity_b);
-        System.out.println(resultSparsity);
-        double[] nonzeros = new double[resultSparsity.n_row];
+        //System.out.println(resultSparsity);
+        double[] nonzeros = new double[resultSparsity.getrow().length/*n_row*/];
         // data from columnVector a and b to nonzeros addieren
-        for (int i=0;i<resultSparsity.getn_row();i++){
+        for (int i=0;i<resultSparsity.getrow().length/*getn_row()*/;i++){
             int result_row = resultSparsity.getrow()[i];
+            //System.out.println("add: row="+String.valueOf(result_row));
             int index_a = getSparsity().determineIndexOfRow(result_row);
             if (index_a >=0) nonzeros[i] += data[index_a];
             int index_b = sparsity_b.determineIndexOfRow(result_row);

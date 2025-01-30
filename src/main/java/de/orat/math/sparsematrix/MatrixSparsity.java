@@ -12,9 +12,9 @@ import java.util.List;
  */
 public class MatrixSparsity {
     
-    final int n_row;
+    final int n_row;     // count of matrix rows >= rows.length
     final int n_col;
-    final int[] colind; // cumulative count of non zeros for each column, started with 0; length == number of columns +1 
+    final int[] colind;  // cumulative count of non zeros for each column, started with 0; length == number of columns +1 
     final int[] rows;    // rowindex for each non zero value, rows.length == number of non zeros
     
     public MatrixSparsity(int n_row, int n_col, int[] colind, int[] row){

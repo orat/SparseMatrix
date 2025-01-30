@@ -103,7 +103,7 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         int[] rows = result.stream().mapToInt(Integer::intValue).toArray();
         //TODO
         // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
-        return new ColumnVectorSparsity(result.size(), rows);
+        return new ColumnVectorSparsity(/*result.size()*/sparsity.getn_row(), rows);
     }
     
     // und-Verknüpfung

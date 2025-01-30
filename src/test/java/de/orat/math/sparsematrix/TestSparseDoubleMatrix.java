@@ -111,10 +111,15 @@ public class TestSparseDoubleMatrix {
         
         ColumnVectorSparsity sparsity_a = new ColumnVectorSparsity(7, new int[]{1,2,3});
         SparseDoubleColumnVector a = new SparseDoubleColumnVector(sparsity_a, new double[]{1,2,3});
+        System.out.println(a);
         ColumnVectorSparsity sparsity_b = new ColumnVectorSparsity(7, new int[]{3,5,6});
         SparseDoubleColumnVector b = new SparseDoubleColumnVector(sparsity_b, new double[]{4,5,6});
+        System.out.println(b);
         SparseDoubleColumnVector result = a.add(b);
         // 0, 1, 2, 7, 0, 5, 6, 0
+        // 7x1,4nz
+        // colind:  [0,4]
+        // row:     [0,2,3,6]
         System.out.println(result);
     }
     
