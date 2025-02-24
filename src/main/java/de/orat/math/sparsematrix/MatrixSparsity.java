@@ -2,7 +2,8 @@ package de.orat.math.sparsematrix;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.EqualsAndHashCode;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
@@ -11,7 +12,6 @@ import lombok.EqualsAndHashCode;
  * particular column, at constant time per element, but expensive to jump to 
  * access a location (i, j).
  */
-@EqualsAndHashCode
 public class MatrixSparsity {
     
     final int n_row;     // count of matrix rows >= rows.length
@@ -233,5 +233,15 @@ public class MatrixSparsity {
             }
         }
         rows = rowList.stream().mapToInt(d -> d).toArray();
-    }
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 }
