@@ -2,6 +2,7 @@ package de.orat.math.sparsematrix;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
@@ -10,6 +11,7 @@ import java.util.List;
  * particular column, at constant time per element, but expensive to jump to 
  * access a location (i, j).
  */
+@EqualsAndHashCode
 public class MatrixSparsity {
     
     final int n_row;     // count of matrix rows >= rows.length
