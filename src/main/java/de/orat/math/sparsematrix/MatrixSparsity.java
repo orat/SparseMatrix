@@ -35,6 +35,9 @@ public class MatrixSparsity {
     public boolean isDense(){
         return rows.length == n_row*n_col;
     }
+    public boolean isNull(){
+        return rows.length == 0;
+    }
     
     public static MatrixSparsity empty(int rows, int cols){
         return new MatrixSparsity(rows, cols, new int[]{0}, new int[]{});

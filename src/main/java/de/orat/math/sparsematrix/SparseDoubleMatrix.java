@@ -71,7 +71,7 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     public double[][] toMatrix(){
         int[] colind = sparsity.getcolind();
         int[] row = sparsity.getrow();
-        System.out.println("sparsity.getn_row="+String.valueOf(sparsity.getn_row()));
+        //System.out.println("sparsity.getn_row="+String.valueOf(sparsity.getn_row()));
         //TODO die erste dim muss größer sein als die Zahl der non-zeros aber wie
         // bestimme ich diese?
         double[][] result = new double[sparsity.getn_row()][sparsity.getn_col()];
@@ -80,8 +80,8 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         for (int col=0;col<colind.length-1;col++){
             // loop over all nonzeros in a column col
             for (int j=colind[col];j<colind[col+1];j++){
-                System.out.println("k="+String.valueOf(k));
-                System.out.println("col="+String.valueOf(col));
+                //System.out.println("k="+String.valueOf(k));
+                //System.out.println("col="+String.valueOf(col));
                 result[row[k]][col] = data[k++];  // Index 5 out of bounds for length == 5
             }
         }
