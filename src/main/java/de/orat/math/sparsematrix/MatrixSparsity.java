@@ -2,6 +2,8 @@ package de.orat.math.sparsematrix;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
@@ -234,5 +236,15 @@ public class MatrixSparsity {
             }
         }
         rows = rowList.stream().mapToInt(d -> d).toArray();
-    }
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 }

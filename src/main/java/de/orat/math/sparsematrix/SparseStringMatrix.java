@@ -67,7 +67,7 @@ public class SparseStringMatrix implements iStringMatrix {
     public String[][] toArr(){
         int[] colind = sparsity.getcolind();
         int[] row = sparsity.getrow();
-        String[][] result = new String[sparsity.getn_row()][sparsity.getn_col()];
+		String[][] result = new String[sparsity.getn_row()][sparsity.getn_col()];
         // loop over columns
         int k=0;
         for (int col=0;col<colind.length-1;col++){
@@ -123,11 +123,23 @@ public class SparseStringMatrix implements iStringMatrix {
         }
         return sb.toString();
     }
-    
+
+	public static void replaceNullWith00(String[][] m) {
+		for (int i = 0; i < m.length; ++i) {
+			String[] n = m[i];
+			for (int j = 0; j < n.length; ++j) {
+				if (n[j] == null) {
+					n[j] = "00";
+				}
+			}
+		}
+	}
+
     public String toString(boolean asMatrix){
         StringBuilder sb = new StringBuilder();
         if (asMatrix){
-            String[][] m = toArr();
+			String[][] m = toArr();
+			replaceNullWith00(m);
             sb.append(toString(m));
         } else {
             sb.append(sparsity.toString());
