@@ -41,8 +41,8 @@ public class ColumnVectorSparsity extends MatrixSparsity {
     /**
      * @param vec only the non-zero values define the sparsity
      */
-    public ColumnVectorSparsity(double[] vec){
-        super(create2dim(vec));
+    public ColumnVectorSparsity(double[] vec, boolean sparsify) {
+        super(create2dim(vec), sparsify);
     }
     private static double[][] create2dim(double[] vec){
         double[][] result = new double[vec.length][1];
@@ -80,7 +80,7 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         for (int i=0;i<rows.length;i++){
             vec[rows[i]] = 1;
         }
-        return new RowVectorSparsity(vec);
+        return new RowVectorSparsity(vec, true);
     }
     
     // oder-Verknüpfung

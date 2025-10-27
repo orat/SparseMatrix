@@ -195,20 +195,21 @@ public class MatrixSparsity {
      * 
      * @param m 
      */
-    public MatrixSparsity(double[][] m){
+    public MatrixSparsity(double[][] m, boolean sparsify) {
         n_row = m.length;
         n_col = m[0].length;
         colind = new int[n_col+1];
         List<Integer> rowList = new ArrayList<>();
         // loop over all columns
-        for (int col=0;col<m[0].length;col++){
+        for (int col = 0; col < n_col; col++) {
             colind[col+1] = colind[col];
             // loop over all rows
-            for (int i=0;i<m.length;i++){
-                if (m[i][col] != 0d){
-                    rowList.add(i);
-                    colind[col+1]++;
+            for (int i = 0; i < n_row; i++) {
+                if (sparsify && (m[i][col] == 0d)) {
+                    continue;
                 }
+                rowList.add(i);
+                colind[col + 1]++;
             }
         }
         rows = rowList.stream().mapToInt(d -> d).toArray();
@@ -219,7 +220,7 @@ public class MatrixSparsity {
      * 
      * @param m 
      */
-    public MatrixSparsity(String[][] m){
+    public MatrixSparsity(String[][] m, boolean sparsify) {
         n_row = m.length;
         n_col = m[0].length;
         colind = new int[n_col+1];
@@ -229,10 +230,11 @@ public class MatrixSparsity {
             colind[col+1] = colind[col];
             // loop over all rows
             for (int i=0;i<m.length;i++){
-                if (!m[i][col].equals("0")){
-                    rowList.add(i);
-                    colind[col+1]++;
+                if (sparsify && m[i][col].equals("0")) {
+                    continue;
                 }
+                rowList.add(i);
+                colind[col + 1]++;
             }
         }
         rows = rowList.stream().mapToInt(d -> d).toArray();

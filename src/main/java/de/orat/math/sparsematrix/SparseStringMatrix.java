@@ -17,8 +17,8 @@ public class SparseStringMatrix implements iStringMatrix {
     /**
      * @param m alle "0"-Komponenten als sparse werten
      */
-    public SparseStringMatrix(String[][] m){
-        sparsity = new MatrixSparsity(m);
+    public SparseStringMatrix(String[][] m, boolean sparsify) {
+        sparsity = new MatrixSparsity(m, sparsify);
         data = rollout(sparsity, m);
     }
     
@@ -159,6 +159,6 @@ public class SparseStringMatrix implements iStringMatrix {
     public SparseStringMatrix transpose() {
         //TODO
         // sehr ineffiziente Implementierung, da sparsity nicht genutzt wird
-        return new SparseStringMatrix((new DenseStringMatrix(toArr())).transpose().toArr());
+        return new SparseStringMatrix((new DenseStringMatrix(toArr())).transpose().toArr(), true);
     }
 }
