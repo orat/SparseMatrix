@@ -1,9 +1,7 @@
 package de.orat.math.sparsematrix;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * MatrixSparsity of a column vector.
@@ -82,48 +80,71 @@ public class ColumnVectorSparsity extends MatrixSparsity {
         }
         return new RowVectorSparsity(vec, true);
     }
-    
-    // oder-Verknüpfung
-    // mir scheint rows die in beiden vorkommen erscheinen doppelt im output
-    //FIXME
-    public ColumnVectorSparsity join(ColumnVectorSparsity sparsity){
-        if (sparsity.getn_row() != getn_row()){
-            throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
-                    String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
+
+    // Vereinigungsmenge
+    public ColumnVectorSparsity union(ColumnVectorSparsity other) {
+        final int n_row_this = this.getn_row();
+        final int n_row_other = other.getn_row();
+        if (n_row_this != n_row_other) {
+            throw new IllegalArgumentException(String.format(
+                "n_rows differ between this and other: %s != %s",
+                n_row_this,
+                n_row_other));
         }
-        List<Integer> result = Arrays.stream(getrow())     // IntStream
-                         .boxed()             // Stream<Integer>
-                         .collect(Collectors.toList());
-        List<Integer> rows2 = Arrays.stream(sparsity.getrow())     // IntStream
-                         .boxed()             // Stream<Integer>
-                         .collect(Collectors.toList());
-        rows2.removeAll(result);
-        result.addAll(rows2);
-        
-        int[] rows = result.stream().mapToInt(Integer::intValue).toArray();
+        final int n_row_both = n_row_this; // Dimension does not change.
+
+        var a = IntStream.of(this.getrow());
+        var b = IntStream.of(other.getrow());
+
+        // Works because there is only one column.
+        int[] rows_union = IntStream.concat(a, b).distinct().sorted().toArray();
+        // Postcondition: Sorted. No duplicates.
+
         //TODO
         // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
-        return new ColumnVectorSparsity(/*result.size()*/sparsity.getn_row(), rows);
+        return new ColumnVectorSparsity(n_row_both, rows_union);
     }
-    
-    // und-Verknüpfung
-    public ColumnVectorSparsity meet(ColumnVectorSparsity sparsity){
-        if (sparsity.getn_row() != getn_row()){
-            throw new IllegalArgumentException("Sparsity object must have the same count of rows: "+
-                    String.valueOf(sparsity.getn_row())+"!="+String.valueOf(getn_row()));
+
+    // Schnittmenge
+    public ColumnVectorSparsity intersection(ColumnVectorSparsity other) {
+        final int n_row_this = this.getn_row();
+        final int n_row_other = other.getn_row();
+        if (n_row_this != n_row_other) {
+            throw new IllegalArgumentException(String.format(
+                "n_rows differ between this and other: %s != %s",
+                n_row_this,
+                n_row_other));
         }
-        List<Integer> rows2 = Arrays.stream(sparsity.getrow())     // IntStream
-                         .boxed()             // Stream<Integer>
-                         .collect(Collectors.toList());
-        List<Integer> resultIndices = new ArrayList<>();
-        for (int i=0;i<rows.length;i++){
-            if (rows2.contains(this.rows[i])){
-                resultIndices.add(rows[i]);
+        final int n_row_both = n_row_this; // Dimension does not change.
+
+        int[] a = this.getrow(); // Precondition: Sorted. No duplicates.
+        int[] b = other.getrow(); // Precondition: Sorted. No duplicates.
+
+        // Cardinality of intersection is always at most the cardinality of the smaller set.
+        int[] buf = new int[Math.min(a.length, b.length)];
+        int ibuf = 0;
+        int ia = 0;
+        int ib = 0;
+        // Runtime: O(min(a.length, b.length))
+        while ((ia < a.length) && (ib < b.length)) {
+            int a_i = a[ia];
+            int b_i = b[ib];
+            if (a_i == b_i) {
+                buf[ibuf] = a_i;
+                ++ibuf;
+                ++ia;
+                ++ib;
+            } else if (a_i < b_i) {
+                ++ia;
+            } else { // a_i > b_i
+                ++ib;
             }
         }
-        int[] nonzeros = resultIndices.stream().mapToInt(Integer::intValue).toArray();
+        // If Lists backed by int arrays would be used, copying could be avoided.
+        int[] rows_intersection = Arrays.copyOf(buf, ibuf + 1); // Postcondition: Sorted. No duplicates.
+
         //TODO
         // hier werden sparsity-Objekte erzeugt, diese sollte ich aber cachen
-        return new ColumnVectorSparsity(getn_row(), nonzeros);
+        return new ColumnVectorSparsity(n_row_both, rows_intersection);
     }
 }
