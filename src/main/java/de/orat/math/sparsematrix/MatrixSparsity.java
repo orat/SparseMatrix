@@ -19,6 +19,7 @@ public class MatrixSparsity {
     final int[] colind;  // cumulative count of non zeros for each column, started with 0; length == number of columns +1 
     final int[] rows;    // rowindex for each non zero value, rows.length == number of non zeros
     
+    // n_row, 1, new int[]{0,rows.length}, rows
     public MatrixSparsity(int n_row, int n_col, int[] colind, int[] row){
         this.n_row = n_row;
         this.n_col = n_col;
