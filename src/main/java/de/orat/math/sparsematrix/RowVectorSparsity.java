@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class RowVectorSparsity extends MatrixSparsity {
     
-    public RowVectorSparsity(double[] vec){
+    public RowVectorSparsity(double[] vec, boolean sparsify) {
         //TODO
         // sehr ineffiziente Implementierung
-        super(create2dim(vec));
+        super(create2dim(vec), sparsify);
     }
     private static double[][] create2dim(double[] vec){
         double[][] result = new double[1][vec.length];
@@ -37,6 +37,6 @@ public class RowVectorSparsity extends MatrixSparsity {
         for (int i=0;i<rows.length;i++){
             vec[rows[i]] = 1;
         }
-        return new ColumnVectorSparsity(vec);
+         return new ColumnVectorSparsity(vec, true);
      }
 }

@@ -17,9 +17,9 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
         this.data = new double[]{};
     }
     
-    public SparseDoubleMatrix(double[][] m){
+    public SparseDoubleMatrix(double[][] m, boolean sparsify) {
         System.out.println(toString(m));
-        sparsity = new MatrixSparsity(m);
+        sparsity = new MatrixSparsity(m, sparsify);
         //System.out.println(sparsity.toString());
         data = rollout(sparsity, m);
     }
@@ -141,6 +141,6 @@ public class SparseDoubleMatrix implements iDoubleMatrix {
     public iDoubleMatrix transpose() {
         //TODO
         // sehr ineffiziente Implementierung, da sparsity nicht genutzt wird
-        return new SparseDoubleMatrix((new DenseDoubleMatrix(toMatrix())).transpose().toMatrix());
+        return new SparseDoubleMatrix((new DenseDoubleMatrix(toMatrix())).transpose().toMatrix(), true);
     }
 }

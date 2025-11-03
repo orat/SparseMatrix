@@ -49,7 +49,7 @@ public class TestSparseDoubleMatrix {
                                       {3,1,0.1,0},
                                       {0,0,4,  0}};
         //System.out.println(SparseDoubleMatrix.toString(a));
-        SparseDoubleMatrix sm = new SparseDoubleMatrix(a);
+        SparseDoubleMatrix sm = new SparseDoubleMatrix(a, true);
         MatrixSparsity sparsity = sm.getSparsity();
         int[] colind = new int[]{0,2,3,5,6};
         int[] row = new int[]{0,1,1,1,2,0};
@@ -85,7 +85,7 @@ public class TestSparseDoubleMatrix {
                                          {"5","6","7","8"},
                                          {"9","10","11","12"}};
         
-        SparseStringMatrix ssm = new SparseStringMatrix(test);
+        SparseStringMatrix ssm = new SparseStringMatrix(test, true);
         String[][] sb = ssm.toArr();
         assertTrue(equals(test, sb));
     }
@@ -94,7 +94,7 @@ public class TestSparseDoubleMatrix {
     public void testSparsityIsNonZero(){
         System.out.println("----------------------------------------------------- test sparsity.isNonZero()-------");
         double[] values = new double[]{1,0,3,4,0,0,6};
-        ColumnVectorSparsity sparsity = new ColumnVectorSparsity(values);
+        ColumnVectorSparsity sparsity = new ColumnVectorSparsity(values, true);
         System.out.println(sparsity.toString());
         for (int i=0;i<values.length;i++){
             if (sparsity.isNonZero(i, 0)){

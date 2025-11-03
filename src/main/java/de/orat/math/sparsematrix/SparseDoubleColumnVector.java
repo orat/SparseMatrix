@@ -95,7 +95,7 @@ public class SparseDoubleColumnVector extends /*DoubleVector*/ SparseDoubleMatri
     // very slow implementation
     public SparseDoubleColumnVector add(SparseDoubleColumnVector b){
         ColumnVectorSparsity sparsity_b = b.getSparsity();
-        ColumnVectorSparsity resultSparsity = getSparsity().join(sparsity_b);
+        ColumnVectorSparsity resultSparsity = getSparsity().union(sparsity_b);
         //System.out.println(resultSparsity);
         double[] nonzeros = new double[resultSparsity.getrow().length/*n_row*/];
         // data from columnVector a and b to nonzeros addieren
