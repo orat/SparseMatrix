@@ -10,8 +10,8 @@ import java.util.stream.IntStream;
  */
 public class ColumnVectorSparsity extends MatrixSparsity {
     
-    public ColumnVectorSparsity(int n_row, int[] rows){
-        super(n_row, 1, new int[]{0,rows.length}, rows);
+    public ColumnVectorSparsity(int n_row, int[] nonzerosPositionsArray){
+        super(n_row, 1, new int[]{0,nonzerosPositionsArray.length}, nonzerosPositionsArray);
     }
     
     public static ColumnVectorSparsity instance(MatrixSparsity sparsity){
